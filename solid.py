@@ -30,6 +30,8 @@ class Fighter():
 
     def change_weapon(self, weapons: Weapon):
         self.weapons = weapons
+        weapon_name = weapons.bow if isinstance(weapons, Bow) else weapons.sword
+        return f'Боец {self.name} поменял оружие на {weapon_name}'
 
     def attack_monster(self, monster):
         print(f'{self.weapons.attack()}')
@@ -48,5 +50,5 @@ ninja_monster = Monster('Black Star')
 print(f'\n{ninja_fighter.name} выбирает {ninja_sword.sword}')
 ninja_fighter.attack_monster(ninja_monster)
 
-print((f'\n{ninja_fighter.name} выбирает {ninja_bow.bow}'))
+print(f'\n{ninja_fighter.change_weapon(ninja_bow)}')
 ninja_fighter.attack_monster(ninja_monster)

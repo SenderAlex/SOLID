@@ -1,42 +1,52 @@
-class Animal():
+from abc import ABC, abstractmethod
 
-    def __init__(self, name, age):
+
+class Weapon(ABC):
+    @abstractmethod
+    def attack(self):
+        pass
+
+
+class Sword(Weapon):
+    def __init__(self, sword):
+        self.sword = sword
+
+    def attack(self):
+        return f'Боец атакует мечом'
+
+
+class Bow(Weapon):
+    def __init__(self, bow):
+        self.bow = bow
+
+    def attack(self):
+        return f'Боец атакует луком'
+
+
+class Fighter():
+    def __init__(self, name, weapons: Weapon):
         self.name = name
-        self.age = age
+        self.weapons = weapons
 
-    def make_sound(self):
-        return ''
+    def change_weapon(self, weapons: Weapon):
+        self.weapons = weapons
 
-class Bird(Animal):
-    def __init__(self, name, age, fly):
-        super().__init__(name, age)
-        self.fly = fly
+    def attack_monster(self, monster):
+        print(f'{self.weapons.attack()}')
+        print(f'{monster.name} побеждён')
 
-    def make_sound(self):
-        return 'чик-чирик'
 
-class Mammal(Animal):
-    def __init__(self, name, age, leg):
-        super().__init__(name, age)
-        self.leg = leg
+class Monster():
+    def __init__(self, name):
+        self.name = name
 
-    def make_sound(self):
-        return 'мяу и гав'
+ninja_sword = Sword('Black star sword')
+ninja_bow = Bow('Black star bow')
+ninja_fighter = Fighter('Alexander', ninja_sword)
+ninja_monster = Monster('Black Star')
 
-class Reptile(Animal):
-    def __init__(self, name, age, tail):
-        super().__init__(name, age)
-        self.tail = tail
+print(f'\n{ninja_fighter.name} выбирает {ninja_sword.sword}')
+ninja_fighter.attack_monster(ninja_monster)
 
-    def make_sound(self):
-        return 'шшш...'
-
-def animal_sound(animals):
-    for animal in animals:
-        print(f'Животное {animal.name} возраста {animal.age} издает звук {animal.make_sound()}')
-
-animals = [Bird('Воробей', 3, 'может летать'),
-           Mammal('Горилла', 10, 'может ходить'),
-           Reptile('Ящерица', 5, 'есть хвост')]
-
-animal_sound(animals)
+print((f'\n{ninja_fighter.name} выбирает {ninja_bow.bow}'))
+ninja_fighter.attack_monster(ninja_monster)
